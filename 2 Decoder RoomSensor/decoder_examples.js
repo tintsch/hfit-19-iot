@@ -15,20 +15,19 @@ function Decoder(bytes, port) {
   // port: LoRaWAN-Port
   // Decode an uplink message from a buffer
   // (array) of bytes to an object of fields.
-  var co2 = (bytes[8] << 8) + bytes[7];
-  if (co2 == 0) {
-    decoded.error = 1;
-    decoded.co2 = 0;
-  } else {
-    decoded.co2 = co2;
-  }
+
+  // Teil Batterie (Alice)
+  var capacity = 2.6*(10*10*10*10*10*10);
+  var consumption = bytes[14]*(16*16*16*16) + bytes[13]*(16*16*16) + bytes[12]*(16*16) + bytes[11];
+  var battery = 100 / capacity * (capacity - consumption);
 
   var decoded = {
     humidity: bytes[4] * 0.5,
     // temperature: (bytes[3] * 256 + bytes[2]) * 0.01    // Höherwertiges Byte multiplizieren mit 2 Stellen (16*16)
     temperature: ((bytes[3] << 8) + bytes[2]) * 0.01,     // <<: shift left und zusammenzählen
     // temperature: (bytes[3] << 8 | bytes[2]) * 0.01     // shift left und ODER Verknüpfung
-    co2: (bytes[8] << 8) + bytes[7]
+    co2: (bytes[8] << 8) + bytes[7],
+    battery: battery
   };
   return decoded;
 }
