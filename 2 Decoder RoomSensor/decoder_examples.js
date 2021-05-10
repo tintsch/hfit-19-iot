@@ -1,3 +1,15 @@
+/*
+    Example payloads:
+    Payload: 04011809400302ea01050302be0000
+    Output:
+    {
+    "temp": 23.28,
+    "co2": 490,
+    "humidity": 32
+    }
+*/
+
+// Decoder function for The Things Network:
 function Decoder(bytes, port) {
   // bytes: Array
   // port: LoRaWAN-Port
