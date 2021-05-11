@@ -56,7 +56,7 @@ function bytes2signedInt(byte) {
       // Wert mit Vorzeichen korrekt umrechnen:
       temperature: bytes2signedInt([bytes[3], bytes[2]]) * 0.01,
       co2: (bytes[8] << 8) + bytes[7],
-      battery: battery
+      consumption: (bytes[14] << 24) + (bytes[13] << 16) + (bytes[12] << 8) + bytes[11]
     };
     return decoded;
   }
