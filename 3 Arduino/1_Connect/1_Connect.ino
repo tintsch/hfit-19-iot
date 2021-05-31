@@ -10,28 +10,18 @@
 
 LoRaModem modem;
 
-/*
- * To connect to a LoRaWAN-Gateway some keys for authentication/encryption/transport are needed:
- */
-String appEui;
-String appKey;
-String devAddr;
-String nwkSKey;
-String appSKey;
-
 void setup() {
 
   Serial.begin(115200);
   while (!Serial);
-  Serial.println("Welcome to MKRWAN1310 first configuration sketch");
-  Serial.println("Register to your favourite LoRa network and we are ready to go!");
+  Serial.println("Arduino MKRWAN 1310: Geräteparameter auslesen");
   if (!modem.begin(EU868)) {
-    Serial.println("Failed to start module");
+    Serial.println("[Fehler] LoRa-Modem konnte nicht gestartet werden.");
     while (1) {}
   };
-  Serial.print("Your module version is: ");
+  Serial.print("[Info] LoRa-Modem (Modul) Version: ");
   Serial.println(modem.version());
-  Serial.print("Your device EUI is: ");
+  Serial.print("[Info] Device_EUI: ");
   Serial.println(modem.deviceEUI());
 
   // initialize digital pin LED_BUILTIN as an output.
