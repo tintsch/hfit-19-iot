@@ -1,0 +1,50 @@
+<!--
+    STFW - IoT
+    Beispiel für MQTT über Websockets
+
+
+-->>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MQTT über Websockets (JS) im Browser</title>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"
+        type="text/javascript">
+    </script>
+    <script type="text/javascript" language="javascript">
+        var mqtt;
+        var timeout = 2000;
+        var host = "eu1.cloud.thethings.network";       // hier MQTT-Broker IP/Domain eintragen
+        var port = 1883;        // hier MQTT-Broker Port eintragen
+
+        // main function
+        function MQTTconnect () {
+            console.log("[MQTT] Connecting to " + host + ":" + port);
+            mqtt = new Paho.MQTT.Client(host, port, "clientjs");
+            var options = {
+                timeout: 3,
+                onSuccess: onConnect
+            };
+            // und los, mit dem Broker verbinden
+            mqtt.connect(options);
+        }
+        // Callback function
+        function onConnect () {
+            console.log("[MQTT] Connected to " + host + ":" + port);
+            mqtt.subscribe("#");
+        }
+    </script>
+    </head>
+    <body><h1>Subscribe to MQTT-Broker</h1>
+        <div>
+            <script>
+                MQTTconnect();
+            </script>
+        </div>
+    </body>
+
+
+</html>
+
+

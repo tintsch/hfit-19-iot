@@ -60,3 +60,20 @@ function bytes2signedInt(byte) {
     };
     return decoded;
   }
+
+  function Decoder(request) {
+    var body = JSON.parse(request.body);
+    console.log(body.data.payload_hex);
+    var payload = body.data.payload_hex;
+    console.log("payload_hex: " + payload);
+    
+    var decoded = [];
+    decoded.push({
+        "device": "39703908-0c39-4d95-bc29-a8fe426315b5",
+        "field": "TEMPERATURE",
+        "value": bytes2signedInt([payload[3], payload[2]]) * 0.01
+    });
+
+    
+    return decoded;
+}  
