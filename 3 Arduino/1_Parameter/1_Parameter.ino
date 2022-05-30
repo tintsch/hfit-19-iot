@@ -1,9 +1,6 @@
-
 /*
   STFW IoT
   This sketch demonstrates the usage of MKR WAN 1300/1310 LoRa module.
-  This example code is in the public domain.
-  Adapted example code for IoT teaching.
 */
 
 #include <MKRWAN.h>
@@ -13,7 +10,7 @@ LoRaModem modem;
 
 void setup() {
 
-  // Serial port für Debugging
+  // Serial Monitor initialisieren
   Serial.begin(115200);
   // Warten bis Serial Port bereit ist
   while (!Serial);

@@ -1,3 +1,15 @@
+var payload = "0401fd09520302940203096a01";
+var payload_array = [];
+for (var i = 0; i < payload.length; i = i + 2) {
+  payload_array.push(parseInt(payload[i] + payload[i + 1], 16));
+}
+
+var temperature = parseInt((payload_array[3] << 8) + payload_array[2], 10);
+console.log(payload_array);
+
+
+
+
 /*
     Example payloads:
     Payload: 04011809400302ea01050302be0000
@@ -17,7 +29,8 @@
 // TODO Port überprüfen (Uplink-Port aus der Doku nehmen), ob es ein Uplink mit Daten ist
 // TODO function bytes2signedInt für Bytearrays mit Länge 1 und 2 ergänzen
 
-function bytes2signedInt(byte) {
+  
+  function bytes2signedInt(byte) {
     // ist das Bit ganz links 1?
     // Weshalb? Weil das das Vorzeichen vorgibt.
     // dazu vergleichen wir das Byte mit der Bitfolge 1000'0000
@@ -35,6 +48,23 @@ function bytes2signedInt(byte) {
     }
     return result;
   }
+
+function Decoder(request) {
+    var body = JSON.parse(request.body);
+    console.log(body.data.payload_hex);
+    var payload = body.data.payload_hex;
+    console.log("payload_hex: " + payload);
+    
+    var decoded = [];
+    decoded.push({
+        "device": "39703908-0c39-4d95-bc29-a8fe426315b5",
+        "field": "TEMPERATURE",
+        "value": bytes2signedInt([payload[3], payload[2]]) * 0.01
+    });
+
+    
+    return decoded;
+}
   
   function Decoder(bytes, port) {
     // bytes: Array
@@ -77,3 +107,11 @@ function bytes2signedInt(byte) {
     
     return decoded;
 }  
+
+
+Downlink: 0580580200C0 (10min, )
+
+
+050584030322  0706100008005001
+
+0701250A4C210A40  0502CB020003  03096901
